@@ -10,6 +10,10 @@ func fields(strct interface{}) []field {
 	for i := 0; i < t.NumField(); i++ {
 		tf := t.Field(i)
 		rvf := rv.Field(i)
+		// checking about being exported or not
+		if !rvf.CanInterface() {
+			continue
+		}
 		f := field{
 			Label:       tf.Name,
 			Name:        tf.Name,
