@@ -1,6 +1,7 @@
 package forms
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -201,6 +202,26 @@ func TestFields_labels(t *testing.T) {
 			for _, check := range tc.checks {
 				check(t, got)
 			}
+		})
+	}
+}
+
+func TestFields_invalidTypes(t *testing.T) {
+	tests := []struct {
+		notAStruct interface{}
+	}{
+		{"this is a string"},
+		{123},
+		{nil},
+	}
+	for _, tc := range tests {
+		t.Run(fmt.Sprintf("%T", tc.notAStruct), func(t *testing.T) {
+			defer func() {
+				if err := recover(); err == nil {
+					t.Errorf("fields(%v) did not panic", tc.notAStruct)
+				}
+			}()
+			fields(tc.notAStruct)
 		})
 	}
 }

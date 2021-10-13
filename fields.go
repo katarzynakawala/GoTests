@@ -4,6 +4,9 @@ import "reflect"
 
 func fields(strct interface{}) []field {
 	rv := reflect.ValueOf(strct)
+	if rv.Kind() != reflect.Struct {
+		panic("form: invalid value; only structs are supported")
+	}
 	t := rv.Type()
 
 	var ret []field
