@@ -180,6 +180,28 @@ func TestFields(t *testing.T) {
 				},
 			},
 		},
+		"Pointers fields should be supported": {
+			strct: struct {
+				Name *string
+				Age  *int
+			}{},
+			want: []field{
+				{
+					Label:       "Name",
+					Name:        "Name",
+					Type:        "text",
+					Placeholder: "Name",
+					Value:       "",
+				},
+				{
+					Label:       "Age",
+					Name:        "Age",
+					Type:        "text",
+					Placeholder: "Age",
+					Value:       0,
+				},
+			},
+		},
 	}
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {

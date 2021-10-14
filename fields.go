@@ -39,6 +39,15 @@ func fields(strct interface{}) []field {
 			continue
 		}
 
+		if rvf.Kind() == reflect.Struct {
+			nestedFields := fields(rvf.Interface())
+			for i, nf := range nestedFields {
+				nestedFields[i].Name = tf.Name + "." + nf.Name
+			}
+			ret = append(ret, nestedFields...)
+			continue
+		}
+
 		f := field{
 			Label:       tf.Name,
 			Name:        tf.Name,
