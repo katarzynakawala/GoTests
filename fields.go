@@ -12,8 +12,6 @@ func valueOf(v interface{}) reflect.Value {
 	}
 
 	if rv.Kind() == reflect.Ptr {
-		// The underlying type is pretty useless if it is nil, so we need to
-		// instantiate a new copy of whatever that is before using it.
 		if rv.IsNil() {
 			rv = reflect.New(rv.Type().Elem())
 		}
