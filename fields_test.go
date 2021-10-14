@@ -243,6 +243,57 @@ func TestFields(t *testing.T) {
 				},
 			},
 		},
+		"Nested pointer structs should be supported": {
+			strct: struct {
+				Name    string
+				Address *struct {
+					Street string
+					Zip    int
+				}
+				ContactCard *struct {
+					Phone string
+				}
+			}{
+				Name: "Kasia Kawala",
+				Address: &struct {
+					Street string
+					Zip    int
+				}{
+					Street: "Warszawska",
+					Zip:    1234,
+				},
+			},
+			want: []field{
+				{
+					Label:       "Name",
+					Name:        "Name",
+					Type:        "text",
+					Placeholder: "Name",
+					Value:       "Kasia Kawala",
+				},
+				{
+					Label:       "Street",
+					Name:        "Address.Street",
+					Type:        "text",
+					Placeholder: "Street",
+					Value:       "Warszawska",
+				},
+				{
+					Label:       "Zip",
+					Name:        "Address.Zip",
+					Type:        "text",
+					Placeholder: "Zip",
+					Value:       1234,
+				},
+				{
+					Label:       "Phone",
+					Name:        "ContactCard.Phone",
+					Type:        "text",
+					Placeholder: "Phone",
+					Value:       "",
+				},
+			},
+		},
 	}
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
