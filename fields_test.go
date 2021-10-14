@@ -7,6 +7,12 @@ import (
 )
 
 func TestFields(t *testing.T) {
+
+	var nilStructPtr *struct {
+		Name string
+		Age  int
+	}
+
 	tests := map[string]struct {
 		strct interface{}
 		want  []field
@@ -152,6 +158,25 @@ func TestFields(t *testing.T) {
 					Type:        "text",
 					Placeholder: "Age",
 					Value:       123,
+				},
+			},
+		},
+		"Nil pointers with a struct type should be supported": {
+			strct: nilStructPtr,
+			want: []field{
+				{
+					Label:       "Name",
+					Name:        "Name",
+					Type:        "text",
+					Placeholder: "Name",
+					Value:       "",
+				},
+				{
+					Label:       "Age",
+					Name:        "Age",
+					Type:        "text",
+					Placeholder: "Age",
+					Value:       0,
 				},
 			},
 		},
