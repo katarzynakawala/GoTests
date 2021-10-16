@@ -6,7 +6,9 @@ import (
 )
 
 func HTML(t *template.Template, strct interface{}) (template.HTML, error) {
+
 	var inputs []string
+
 	for _, field := range fields(strct) {
 		var sb strings.Builder
 		err := t.Execute(&sb, field)
